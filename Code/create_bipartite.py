@@ -1,3 +1,6 @@
+"""
+Code adapted from "Causal Understanding of Fake News Dissemination on Social Media", by Cheng et. al in KDD 2021
+"""
 import pickle
 import pandas as pd
 import networkx as nx
