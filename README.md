@@ -1,6 +1,6 @@
 # Analyzing User Characteristics of Hate Speech Spreaders on Social Media
 
-This is the code for the paper A Debiasing Framework for Analyzing Hate Speech Resharing.
+This is the code for the paper Analyzing User Characteristics of Hate Speech Spreaders on Social Media.
 
 The code has been tested on Python 3.8
 
