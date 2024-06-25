@@ -1,12 +1,11 @@
-# A Debiasing Framework for Analyzing Hate Speech Resharing
+# Analyzing User Characteristics of Hate Speech Spreaders on Social Media
 
 This is the code for the paper A Debiasing Framework for Analyzing Hate Speech Resharing.
 
 The code has been tested on Python 3.8
 
 ## Abstract
-Hate speech on social media threatens the mental and physical well-being of individuals and is further responsible for real-world violence. An important driver behind the spread of hate speech and thus why hateful posts can go viral are reshares, yet little is known about who reshares hate speech and what their characteristics are. However, analyzing user attributes that make users share hate speech is challenging for two reasons: observational social media data are likely to suffer from selection bias, and the vulnerability of users to hate speech may vary, which leads to biased estimates. We thus develop a novel, debiasing framework with three steps: (1) We debias our observational social media data by applying inverse propensity scoring to account for selection bias. (2) We then use the debiased propensity scores to model the past latent vulnerability of users to hate speech as a latent embedding, which we control for in our analysis. (3) We model the effects of user attributes on users' probability of sharing hate speech using an explainable machine learning model. Compared to existing baselines, a particular strength of our framework is that it models relationships that are non-linear, yet still explainable. We find that users with fewer followers, fewer friends, and fewer posts share more hate speech. Younger accounts, in return, share less hate speech. Overall, understanding the factors that drive users to share hate speech is crucial for detecting individuals at risk of engaging in harmful behavior and for designing effective mitigation strategies.
-
+Hate speech on social media threatens the mental and physical well-being of individuals and contributes to real-world violence. Resharing is an important driver behind the spread of hate speech on social media. Yet, little is known about who reshares hate speech and what their characteristics are. In this paper, we analyze the role of user characteristics in hate speech resharing across different types of hate speech (e.g., political hate). For this, we proceed as follows: First, we cluster hate speech posts using large language models to identify different types of hate speech. Then we model the effects of user attributes on users' probability to reshare hate speech using an explainable machine learning model. To do so, we apply debiasing to control for selection bias in our observational social media data and further control for the latent vulnerability of users to hate speech. We find that, all else equal, users with fewer followers, fewer friends, fewer posts, and older accounts share more hate speech. This shows that users with little social influence tend to share more hate speech. Further, we find substantial heterogeneity across different types of hate speech. For example, racist and misogynistic hate is spread mostly by users with little social influence. In contrast, political anti-Trump and anti-right-wing hate is reshared by users with larger social influence. Overall, understanding the factors that drive users to share hate speech is crucial for detecting individuals at risk of engaging in harmful behavior and for designing effective mitigation strategies.
 ## Repository Structure
 Code: Folder to store the code used for the analysis.\
 Data: Folder to store the data.
@@ -24,13 +23,17 @@ Run the script [create_bipartite.py](create_bipartite.py) to create the user-new
 - Required data format for "user_attribute.pkl": {"anonymous_1": {"followers_count": int, "friend_count": int, "register_time": int, "status_count":int, "verified":int, "root_tweet_ids": \["root_tweet_id_1", "root_tweet_id_2", ...\], "label":float}, "anonymous_2": {...}, ...}
 - Required data format for "root_tweets.csv"; pd.DataFrame with columns \["id", "label", "content"\]. "id" is the root tweet id (as int), "label" is the hate speech label (as int), and "content" is the root tweet content.
 
-### Step 1: IPS reweighting:
+### Clustering hate speech:
+To cluster the hate speech posts, run the script [topic_grouping.py](Code/Clustering/topic_grouping.py). 
+You can name the hate speech clusters by running [topic_labeling.py](Code/Clustering/topic_labeling.py).
+
+### IPS reweighting:
 To get the virality- and followers-based propensity score estimation, run the script [pscore_V.py](pscore_V.py) and [pscore_F.py](pscore_F.py), respectively. 
 
-### Step 2: Modeling past latent vulnerability:
+### Modeling past latent vulnerability:
 For the recommendation models BPRMF, BPRMF_V and BPRMF_F, simply adjust the model type parameter in the config ([parser.py](Code/utility/parser.oy)) and run [BPRMF.py](Code/Model_BPRMF/BPRMF.py). For BPRMF_NN, adjust the config and run [BPRMF_neural.py](Code/Model_BPRMF/BPRMF_neural.py). 
 
-### Step 3: Estimating effects of user attributes:
+### Estimating effects of user attributes:
 To get the estimated effects using EBM:
 1. Run [data_processing.py](Code/Causality/data_processing.py) to get the data in the required format.
 2. Run [EBM.py](Code/Causality/EBM.py) to get the estimated effects.
