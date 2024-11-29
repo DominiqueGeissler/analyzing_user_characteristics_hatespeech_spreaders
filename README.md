@@ -37,7 +37,3 @@ For the recommendation models BPRMF, BPRMF_V and BPRMF_F, simply adjust the mode
 To get the estimated effects using EBM:
 1. Run [data_processing.py](Code/Regression/data_processing.py) to get the data in the required format.
 2. Run [EBM.py](Code/Regression/EBM.py) to get the estimated effects.
-
-### Establishing causality:
-1. Run [semi-synthetic_evaluation.ipynb](Code/Regression/semi-synthetic_evaluation.ipynb) to get the semi-synthetic data and evaluate performance on counterfactuals.
-2. Run [sensitivity_analysis.ipynb](Code/Regression/sensitivity_analysis.ipynb) to get the sensitivity analysis results.
